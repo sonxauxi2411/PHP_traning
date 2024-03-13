@@ -1,6 +1,3 @@
-detail
-
-
 
 <?php
 
@@ -8,4 +5,3 @@ detail
 echo '<pre>';
 print_r($data);
 echo '</pre>';
-
