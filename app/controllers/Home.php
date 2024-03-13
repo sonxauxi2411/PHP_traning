@@ -1,20 +1,18 @@
-<?php 
+<?php
 
-class Home {
-    public function index (){
-
+class Home extends Controller
+{
+    public $model_home;
+    public function __construct()
+    {
+       $this->model_home = $this->model('HomeModel');
     }
-    public function detail ($id='', $sulg=''){
-
-        echo 'id: ' . $id;
-        echo 'sulg: ' . $sulg;
+    public function index()
+    {
+        $data = $this->model_home->getList();
+        $detail = $this->model_home->getDetail($id='1');
+        echo '<pre>';
+        print_r($this->model_home->getDetail($id='1'));
+        echo '</pre>';
     }
-
-    public function search (){
-        $keyword = $_GET['keyword'];
-        echo 'search :'.$keyword ;
-
-    }
-
-  
 }
