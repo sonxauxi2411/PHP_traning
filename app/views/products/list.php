@@ -7,4 +7,4 @@ echo '<pre>';
 print_r($data);
 echo '</pre>';
 
-echo $title;
+// echo $title;

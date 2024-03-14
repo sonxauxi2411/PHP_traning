@@ -2,15 +2,13 @@
 
 class Connection
 {
-    private static $instance = null;
+    private static $instance = null, $conn = null;
 
-    private function __construct($config)
+    public function __construct($config)
     {
         //kết nối db
         try {
-            echo '<pre >';
-            print_r($config);
-            echo '</pre>';
+
             //Cấu hình dsn
             $dsn = 'mysql:dbname=' . $config['db'] . ';host=' . $config['host'];
 
@@ -19,11 +17,15 @@ class Connection
                 PDO::MYSQL_ATTR_INIT_COMMAND => 'SET NAMES utf8',
                 PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION,
             ];
-            $con = new PDO($dsn, $config['user'], $config['password']='', $options);
+            // câu lệnh kết nối
+            $con = new PDO($dsn, $config['user'], $config['password'], $options);
+            // var_dump($con);
+            self::$conn = $con;
         } catch (Exception $exception) {
             $mess = $exception->getMessage();
-
-            die($mess);
+            $data['message'] = $mess;
+            App::$app->loadError('database', $data);
+            die();
             // if(preg_match('/Access denied for user/'. $mess)){
             //     die('Lỗi kết nối cơ sở dữ liệu');
             // }
@@ -36,7 +38,8 @@ class Connection
     {
         if (self::$instance == null) {
 
-            self::$instance = new Connection($config);
+            $connection = new Connection($config);
+            self::$instance = self::$conn;
         }
 
         return self::$instance;

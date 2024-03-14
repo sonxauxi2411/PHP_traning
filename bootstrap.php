@@ -29,12 +29,14 @@ require_once 'core/Route.php'; //load routes
 require_once 'app/App.php'; //load app
 
 
+
 if (!empty($configDB)) {
     $db_config = array_filter($configDB['database']);
     if (!empty($db_config)) {
         require_once 'core/Connection.php';
-        $conn = Connection::getInstance($db_config);
+        require_once 'core/Database.php';
     }
 }
 
+require_once 'core/Model.php'; //load base model
 require_once 'core/Controller.php'; //load base controller
